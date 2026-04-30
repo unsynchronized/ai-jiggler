@@ -1,6 +1,7 @@
 import usb.device
 from usb.device.keyboard import KeyboardInterface, KeyCode
 import time
+import random
 
 
 def type_string(kb, text, delay_ms=50):
@@ -75,8 +76,36 @@ time.sleep_ms(50)
 kb.send_keys([])
 time.sleep(2)
 
-type_string(kb, "What time is hacker drinkup LA?")
-kb.send_keys([KeyCode.ENTER])
-time.sleep_ms(50)
-kb.send_keys([])
+WORDS = [
+    "galaxy", "trumpet", "marble", "cactus", "phoenix", "lantern", "breeze", "fossil",
+    "velvet", "anchor", "prism", "dagger", "cobalt", "ember", "falcon", "glacier",
+    "horizon", "ivory", "jungle", "kettle", "lemon", "mystic", "nebula", "orchid",
+    "parrot", "quartz", "riddle", "summit", "tundra", "umbra", "vortex", "walrus",
+    "zenith", "blizzard", "copper", "dolphin", "eclipse", "furnace", "granite", "harpoon",
+    "insect", "jasmine", "kayak", "labyrinth", "magnet", "nomad", "obelisk", "puzzle",
+    "quantum", "raven", "scarlet", "tornado", "unicorn", "vagrant", "whisper", "xylophone",
+    "yonder", "zeppelin", "alchemy", "bamboo", "cascade", "dungeon", "enigma", "firestorm",
+    "gargoyle", "hammock", "igloo", "jigsaw", "kraken", "limestone", "mirage", "nucleus",
+    "octagon", "phantom", "quicksand", "relic", "sapphire", "tempest", "utopia", "volcano",
+    "wildfire", "xenon", "yearning", "zigzag", "aurora", "basilisk", "chimera", "dragonfly",
+    "emerald", "fjord", "gazelle", "hydra", "inferno", "jubilee", "kaleidoscope", "lynx",
+    "monsoon", "nectarine", "osprey", "porcupine", "quintet", "rattlesnake", "sphinx",
+    "thistle", "undertow", "vineyard", "wisteria", "passport", "yucca", "zodiac",
+    "avalanche", "bonsai", "centaur", "driftwood", "evergreen", "flamingo", "geyser",
+    "hedgehog", "iceberg", "jackal", "kudzu", "lighthouse", "mantis", "nautilus",
+    "obsidian", "penguin", "quasar", "rosemary", "stallion", "tapestry",
+]
+
+while True:
+    picked = []
+    indices = list(range(len(WORDS)))
+    for _ in range(5):
+        i = random.randint(0, len(indices) - 1)
+        picked.append(WORDS[indices.pop(i)])
+    prompt = "What do you think about " + " ".join(picked) + "?"
+    type_string(kb, prompt)
+    kb.send_keys([KeyCode.ENTER])
+    time.sleep_ms(50)
+    kb.send_keys([])
+    time.sleep(random.randint(30, 60))
 
